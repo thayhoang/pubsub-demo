@@ -1,0 +1,31 @@
+server:
+  port: 8088
+
+management:
+  server:
+    port: 9008
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health,info,metrics
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        inputChannel:
+          contentType: application/json
+          destination: my-destination
+          group: my-group
+          default:
+            consumer:
+              auto-create-resources: true
+            producer:
+              auto-create-resources: true
+    gcp:
+      pubsub:
+        subscriber:
+          max-ack-extension-period: 30000
+          parallel-pull-count: 1
+          executor-threads: 5
